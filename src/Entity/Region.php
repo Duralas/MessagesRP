@@ -21,7 +21,7 @@ class Region
     private $code;
 
     /**
-     * @ORM\Column(name="nom", type="string", length=250, nullable=false, options={"comment"="Nom de la région"}
+     * @ORM\Column(name="nom", type="string", length=250, nullable=false, options={"comment"="Nom de la région"})
      *
      * @var string|null Nom région
      */

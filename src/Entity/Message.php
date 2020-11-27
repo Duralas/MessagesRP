@@ -40,7 +40,7 @@ class Message
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Periodes")
+     * @ORM\OneToOne(targetEntity="Periode")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="période", referencedColumnName="code")
      * })
@@ -54,7 +54,7 @@ class Message
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Zones")
+     * @ORM\OneToOne(targetEntity="Zone")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="zone", referencedColumnName="code")
      * })
@@ -82,7 +82,7 @@ class Message
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Personnages")
+     * @ORM\OneToOne(targetEntity="Personnage")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="personnage", referencedColumnName="nom")
      * })

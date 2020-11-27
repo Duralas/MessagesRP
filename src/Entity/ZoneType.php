@@ -13,7 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 class ZoneType
 {
     /**
-     *
      * @ORM\Column(name="code", type="string", length=10, nullable=false, options={"comment"="Code d'identification du type"})
      * @ORM\Id
      *
@@ -22,7 +21,6 @@ class ZoneType
     private ?string $code;
 
     /**
-     *
      * @ORM\Column(name="libelle", type="string", length=250, nullable=false, options={"comment"="Libellé du type"})
      *
      * @var string|null Libellé type
@@ -30,8 +28,7 @@ class ZoneType
     private $libelle;
 
     /**
-     *
-     * @ORM\Column(name="exclusion", type="boolean", nullable=false, options={"comment"="Marque le type comme exclu des statistiques"}
+     * @ORM\Column(name="exclusion", type="boolean", nullable=false, options={"comment"="Marque le type comme exclu des statistiques"})
      *
      * @var bool Type à exclure
      */

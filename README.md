@@ -30,7 +30,7 @@ Ce projet réalisé en Symfony 5 a pour but de facilement recenser les messages 
 ## Réalisation
 
 Plusieurs étapes sont nécessaires pour utiliser l'application mais surtout pour la rendre la plus complète possible selon les besoins :
-- [ ] Entités
+- [x] Entités
    - [ ] CRUD
 - [ ] Formulaire de recensement
    - [ ] Définir la période active

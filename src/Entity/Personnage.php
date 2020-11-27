@@ -32,7 +32,7 @@ class Personnage
     private bool $actif = true;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Factions")
+     * @ORM\ManyToOne(targetEntity="Faction")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="faction", referencedColumnName="code")
      * })

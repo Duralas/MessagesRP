@@ -19,7 +19,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Zone
 {
     /**
-     *
      * @ORM\Column(name="code", type="string", length=10, nullable=false, options={"comment"="Code d'identification de la zone"})
      * @ORM\Id
      *
@@ -28,7 +27,6 @@ class Zone
     private ?string $code;
 
     /**
-     *
      * @ORM\Column(name="nom", type="string", length=250, nullable=false, options={"comment"="Nom de la zone"})
      *
      * @var string|null Nom zone
@@ -36,8 +34,7 @@ class Zone
     private ?string $nom;
 
     /**
-     *
-     * @ORM\ManyToOne(targetEntity="Regions")
+     * @ORM\ManyToOne(targetEntity="Region")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="region", referencedColumnName="code")
      * })
@@ -47,8 +44,7 @@ class Zone
     private ?Region $region;
 
     /**
-     *
-     * @ORM\ManyToOne(targetEntity="ZoneTypes")
+     * @ORM\ManyToOne(targetEntity="ZoneType")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="type", referencedColumnName="code")
      * })
