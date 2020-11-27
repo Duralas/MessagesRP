@@ -9,4 +9,5 @@ return array(
     Twig\Extra\TwigExtraBundle\TwigExtraBundle::class => array('all' => true),
     Doctrine\Bundle\DoctrineBundle\DoctrineBundle::class => array('all' => true),
     Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle::class => array('all' => true),
+    Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class => array('dev' => true, 'test' => true),
 );
