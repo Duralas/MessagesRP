@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recensement{% endblock %}
+
+
+{% block content_title %}Recensement de message RP{% endblock %}
+
+{% block introduction %}
+  Cette page fournit le formulaire permettant de recensement les messages RP selon la <a href="{{ path('periode_index') }}" title="Cliquer pour accéder à la liste des périodes paramétrées">période</a> à propos des informations suivantes :
+  <ul>
+    <li><strong>Mois réel</strong> durant lequel ont été postés les messages recensés.</li>
+    <li><strong>Zone</strong> dans laquelle ont été postés les messages. Ceci permet aussi de définir la <u>région</u>.</li>
+    <li><strong>Personnage</strong> : l'auteur des-dits messages recensés, à condition qu'il ait été <a href="{{ path('personnage_index') }}" title="Cliquer pour accéder à la liste des personnages paramétrés">paramétré</a> dans l'application.</li>
+    <li>Le <strong>nombre</strong> de messages postés selon les granularités listées au-dessus.</li>
+  </ul>
+{% endblock %}
+
+{% block content %}
+  <h2>Formulaire de recherche</h2>
+  <div class="info">En remplissant les informations indiquées, il est possible de rechercher un recensement déjà effectué sur la période active.</div>
+  {{ form_start(form_recherche) }}
+    {{ form_widget(form_recherche) }}
+
+    <button class="btn" type="submit" title="Rechercher un recensement pour les paramètres indiqués.">Rechercher</button>
+  {{ form_end(form_recherche) }}
+
+
+  <h2>Formulaire de recensement</h2>
+  {{ form_start(form_recensement) }}
+    {{ form_widget(form_recensement) }}
+
+    <button class="btn" type="submit" title="Soumettre le formulaire pour recenser les messages RP.">Recenser</button>
+  {{ form_end(form_recensement) }}
+{% endblock %}
