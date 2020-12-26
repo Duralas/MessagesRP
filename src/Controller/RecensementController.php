@@ -91,7 +91,7 @@ class RecensementController extends AbstractController
         }
 
         return $this->createRecenseView($formSearch, $this->createForm(RecenseType::class, $recensement), array(
-            'recense_mode' => 'UPDATE',
+            'recense_mode' => $recensement ? 'UPDATE' : 'CREATE',
         ));
     }
 

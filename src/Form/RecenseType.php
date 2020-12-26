@@ -49,7 +49,7 @@ class RecenseType extends AbstractType
         $builder
             ->add('periode', EntityType::class, array(
                 'class' => Periode::class,
-                'empty_data' => $periode,
+                'data' => $periode,
                 'query_builder' => static function (PeriodeRepository $repo) use ($periode) {
                     if ($periode) {
                         return $repo->getQBActive()
@@ -63,7 +63,7 @@ class RecenseType extends AbstractType
             ))
             ->add('mois', EntityType::class, array(
                 'class' => Mois::class,
-                'empty_data' => $this->em->getRepository(Mois::class)->find($options['mois']),
+                'data' => $this->em->getRepository(Mois::class)->find($options['mois']),
                 'query_builder' => static function (EntityRepository $repo) use ($periode) {
                     $qb = $repo->createQueryBuilder('m')->orderBy('m.ordre');
 
@@ -79,7 +79,7 @@ class RecenseType extends AbstractType
             ))
             ->add('zone', EntityType::class, array(
                 'class' => Zone::class,
-                'empty_data' => $this->em->getRepository(Zone::class)->find($options['zone']),
+                'data' => $this->em->getRepository(Zone::class)->find($options['zone']),
                 'group_by' => static function (Zone $zone) {
                   return $zone->getRegion() ? $zone->getRegion()->getNom() : '';
                 },

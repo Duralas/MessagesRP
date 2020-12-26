@@ -30,6 +30,6 @@
     <input name="recense_mode" type="hidden" value="{{ recense_mode ?? 'CREATE' }}">
     {{ form_widget(form_recensement) }}
 
-    <button class="btn" type="submit" title="Soumettre le formulaire pour recenser les messages RP.">Recenser</button>
+    <button class="btn" type="submit" title="Soumettre le formulaire pour recenser les messages RP.">{{ recense_mode is defined and recense_mode == 'UPDATE' ? 'Modifier' : 'Recenser' }}</button>
   {{ form_end(form_recensement) }}
 {% endblock %}
