@@ -46,4 +46,9 @@ class Faction
     {
         return $this->nom;
     }
+
+    public function __toString(): string
+    {
+        return $this->getNom() ?: 'Sans nom';
+    }
 }

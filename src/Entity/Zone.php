@@ -92,4 +92,9 @@ class Zone
     {
         return $this->type;
     }
+
+    public function __toString()
+    {
+        return $this->nom ?: 'Inconnu';
+    }
 }

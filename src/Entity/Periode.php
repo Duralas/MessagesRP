@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Entité pour la table "periodes" listant les périodes couvertes par la gazette du Phénix Enchaîné.
  *
  * @ORM\Table(name="periodes")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\PeriodeRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Periode
@@ -20,7 +20,6 @@ class Periode
      * @ORM\Id
      *
      * @Assert\NotBlank(message="La période doit pouvoir être identifiée à partir d'un code.")
-     * @Assert\Unique(message="Le code sert à l'identification et doit être unique.")
      *
      * @var string|null Code identification
      */
@@ -30,7 +29,6 @@ class Periode
      * @ORM\Column(name="nom", type="string", length=50, nullable=false, options={"comment"="Nom de la période"})
      *
      * @Assert\NotBlank(message="La période doit être nommée.")
-     * @Assert\Unique(message="Le nom est lié au code et doit être unique.")
      *
      * @var string|null Nom de la période
      */
@@ -162,5 +160,10 @@ class Periode
     public function isActive(): bool
     {
         return $this->active;
+    }
+
+    public function __toString()
+    {
+        return $this->nom ?: 'Inconnu';
     }
 }

@@ -33,9 +33,9 @@ class Message
      * @ORM\Column(name="modification", type="datetime", nullable=false, options={"default"="current_timestamp()","comment"="Dernière date de modification"})
      * @Gedmo\Timestampable(on="update")
      *
-     * @var DateTime|null Dernière date de modification
+     * @var DateTime Dernière date de modification
      */
-    private ?DateTime $updatedAt;
+    private DateTime $updatedAt;
 
     /**
      * @ORM\Id
@@ -92,6 +92,11 @@ class Message
      * @var Personnage|null Auteur du(des) message(s)
      */
     private ?Personnage $auteur;
+
+    public function __construct()
+    {
+        $this->updatedAt = date_create();
+    }
 
     /**
      * Récupère le nombre de messages postés correspondant au couple (Période / Zone / Mois / Auteur).

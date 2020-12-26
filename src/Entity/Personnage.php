@@ -104,4 +104,9 @@ class Personnage
     {
         $this->faction = $faction;
     }
+
+    public function __toString()
+    {
+        return $this->nom ?: 'Inconnu';
+    }
 }

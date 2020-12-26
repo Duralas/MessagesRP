@@ -1,12 +1,26 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Dùralas - {% block title %}{% endblock %}</title>
+  {% block stylesheets %}{% endblock %}
+</head>
+
+<body>
+{% block body %}
+  <main>
+    <h1>{% block content_title %}{% endblock %}</h1>
+
+    <div id="introduction">
+      {% block introduction %}{% endblock %}
+    </div>
+
+    <div class="content">
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+{% endblock %}
+
+  {% block javascripts %}{% endblock %}
+</body>
 </html>
