@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Personnage{% endblock %}
+
+{% block body %}
+    <h1>Personnage</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Nom</th>
+                <td>{{ personnage.nom }}</td>
+            </tr>
+            <tr>
+                <th>Actif</th>
+                <td>{{ personnage.actif ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('personnage_index') }}">back to list</a>
+
+    <a href="{{ path('personnage_edit', {'nom': personnage.nom}) }}">edit</a>
+{% endblock %}

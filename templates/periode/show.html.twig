@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Periode{% endblock %}
+
+{% block body %}
+    <h1>Periode</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Code</th>
+                <td>{{ periode.code }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ periode.nom }}</td>
+            </tr>
+            <tr>
+                <th>StartDate</th>
+                <td>{{ periode.startDate ? periode.startDate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>EndDate</th>
+                <td>{{ periode.endDate ? periode.endDate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('periode_index') }}">back to list</a>
+
+    <a href="{{ path('periode_edit', {'code': periode.code}) }}">edit</a>
+{% endblock %}
