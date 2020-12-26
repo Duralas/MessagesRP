@@ -18,7 +18,7 @@
 {% block content %}
   <h2>Formulaire de recherche</h2>
   <div class="info">En remplissant les informations indiquées, il est possible de rechercher un recensement déjà effectué sur la période active.</div>
-  {{ form_start(form_recherche) }}
+  {{ form_start(form_recherche, {attr: {action: path('app_recensement_search')}}) }}
     {{ form_widget(form_recherche) }}
 
     <button class="btn" type="submit" title="Rechercher un recensement pour les paramètres indiqués.">Rechercher</button>
@@ -26,7 +26,8 @@
 
 
   <h2>Formulaire de recensement</h2>
-  {{ form_start(form_recensement) }}
+  {{ form_start(form_recensement, {attr: {action: path('app_recensement_handle')}}) }}
+    <input name="recense_mode" type="hidden" value="{{ recense_mode ?? 'CREATE' }}">
     {{ form_widget(form_recensement) }}
 
     <button class="btn" type="submit" title="Soumettre le formulaire pour recenser les messages RP.">Recenser</button>

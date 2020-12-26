@@ -2,23 +2,23 @@
 
 namespace App\Form;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class RecenseSearchType extends AbstractType
+class RecenseSearchType extends RecenseType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        parent::buildForm($builder, $options);
         $builder
-            ->add('field_name')
+            ->add('periode') // Pour retrouver la config par défaut du champ
+            ->remove('nombre')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            // Configure your form options here
-        ]);
+        parent::configureOptions($resolver);
+        $resolver->setDefault('periode', null);
     }
 }

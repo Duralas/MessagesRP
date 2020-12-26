@@ -12,7 +12,6 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Event\PostSubmitEvent;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -50,7 +49,7 @@ class RecenseType extends AbstractType
         $builder
             ->add('periode', EntityType::class, array(
                 'class' => Periode::class,
-                'data' => $periode,
+                'empty_data' => $periode,
                 'query_builder' => static function (PeriodeRepository $repo) use ($periode) {
                     if ($periode) {
                         return $repo->getQBActive()
@@ -64,7 +63,7 @@ class RecenseType extends AbstractType
             ))
             ->add('mois', EntityType::class, array(
                 'class' => Mois::class,
-                'data' => $this->em->getRepository(Mois::class)->find($options['mois']),
+                'empty_data' => $this->em->getRepository(Mois::class)->find($options['mois']),
                 'query_builder' => static function (EntityRepository $repo) use ($periode) {
                     $qb = $repo->createQueryBuilder('m')->orderBy('m.ordre');
 
@@ -80,15 +79,13 @@ class RecenseType extends AbstractType
             ))
             ->add('zone', EntityType::class, array(
                 'class' => Zone::class,
-                'data' => $this->em->getRepository(Zone::class)->find($options['zone']),
+                'empty_data' => $this->em->getRepository(Zone::class)->find($options['zone']),
                 'group_by' => static function (Zone $zone) {
                   return $zone->getRegion() ? $zone->getRegion()->getNom() : '';
                 },
             ))
             ->add('auteur')
-            ->add('nombre', IntegerType::class, array(
-                'data' => 1,
-            ))
+            ->add('nombre')
         ;
 
         $cache = $this->cache;
@@ -117,7 +114,6 @@ class RecenseType extends AbstractType
         $periodeKey = $periode ? $periode->getCode() : 'periode';
 
         $resolver->setDefaults([
-            'action' => '',
             'data_class' => Message::class,
             'periode' => $periode,
             'mois' => $this->cache->getItem("{$periodeKey}_mois")->get(),
