@@ -6,6 +6,7 @@ use App\Entity\Faction;
 use App\Entity\Personnage;
 use App\Entity\Region;
 use App\Model\RecenseFilters;
+use App\Repository\PersonnageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -46,8 +47,8 @@ class RecenseFilterType extends AbstractType
                 'required' => false,
             ))
             ->add('faction', EntityType::class, array(
-                'class' => Faction::class,
-                'data' => $faction ? $this->em->getRepository(Faction::class)->find($faction) : null,
+                'class'    => Faction::class,
+                'data'     => $faction ? $this->em->getRepository(Faction::class)->find($faction) : null,
                 'required' => false,
             ))
             ->add('personnages', EntityType::class, array(
@@ -56,7 +57,10 @@ class RecenseFilterType extends AbstractType
                 'group_by' => static function (Personnage $personnage) {
                     return $personnage->isActif() ? 'Actif' : 'Inactif';
                 },
-                'multiple' => true,
+                'multiple'      => true,
+                'query_builder' => static function (PersonnageRepository $repo) {
+                    return $repo->getQBBase();
+                },
                 'required' => false,
             ))
         ;

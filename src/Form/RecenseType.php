@@ -6,7 +6,6 @@ use App\Entity\Message;
 use App\Entity\Mois;
 use App\Entity\Periode;
 use App\Entity\Personnage;
-use App\Entity\Region;
 use App\Entity\Zone;
 use App\Repository\PeriodeRepository;
 use App\Repository\PersonnageRepository;

@@ -32,6 +32,13 @@ class Personnage
     private bool $actif = true;
 
     /**
+     * @ORM\Column(name="archive", type="boolean", nullable=false, options={"comment"="Si le personnage est arcivhé ou non"})
+     *
+     * @var bool Si le personnage est archivé ou non
+     */
+    private bool $archive = false;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Faction")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="faction", referencedColumnName="code")
@@ -79,6 +86,26 @@ class Personnage
     public function setActif(bool $actif): void
     {
         $this->actif = $actif;
+    }
+
+    /**
+     * Indique si le personnage est archivé.
+     *
+     * @return bool True => archivé / False => non archivé
+     */
+    public function isArchive(): bool
+    {
+        return $this->archive;
+    }
+
+    /**
+     * Spécifie si le personnage est archivé ou non.
+     *
+     * @param bool $archive True => archivé / False => non archivé
+     */
+    public function setArchive(bool $archive): void
+    {
+        $this->archive = $archive;
     }
 
     /**
