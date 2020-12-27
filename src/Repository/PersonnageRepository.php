@@ -8,7 +8,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Contracts\Cache\CacheInterface;
-use function is_array;
 use function is_string;
 
 class PersonnageRepository extends ServiceEntityRepository
@@ -51,14 +50,14 @@ class PersonnageRepository extends ServiceEntityRepository
         $personnages = $cache->getItem('recensement_filters_personnages')->get();
 
         $qb = $this->createQueryBuilder('p');
-        if (is_array($personnages) && !empty($personnages)) {
+        if (is_iterable($personnages) && !empty($personnages)) {
             $personnageList = array_map(static function ($item) {
                 if ($item instanceof Personnage) {
                     return $item->getNom();
                 }
 
                 return is_string($item) && !empty($item) ? $item : null;
-            }, $personnages);
+            }, $personnages instanceof Collection ? $personnages->toArray() : $personnages);
 
             if (!empty($personnageList)) {
                 $qb->where('p.nom IN (:personnages)')
