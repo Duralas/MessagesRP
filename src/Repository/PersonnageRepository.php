@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Faction;
 use App\Entity\Personnage;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Collection;
@@ -39,17 +40,21 @@ class PersonnageRepository extends ServiceEntityRepository
     }
 
     /**
-     * Récupère la query builder des personnages à partir d'un filtre en cache.
+     * Récupère la query builder des personnages à partir de filtres en cache.
      *
      * @param CacheInterface $cache Cache applicatif
      *
-     * @return QueryBuilder Requête des personnages à partir d'un filtre
+     * @return QueryBuilder Requête des personnages à partir de filtres
      */
     public function getQBFromCachedPersonnages(CacheInterface $cache): QueryBuilder
     {
-        $personnages = $cache->getItem('recensement_filters_personnages')->get();
+        $qb = $this->createQueryBuilder('p')
+            ->orderBy('p.actif', 'DESC')
+            ->addOrderBy('p.nom')
+        ;
 
-        $qb = $this->createQueryBuilder('p');
+        // Personnages
+        $personnages = $cache->getItem('recensement_filters_personnages')->get();
         if (is_iterable($personnages) && !empty($personnages)) {
             $personnageList = array_map(static function ($item) {
                 if ($item instanceof Personnage) {
@@ -64,6 +69,14 @@ class PersonnageRepository extends ServiceEntityRepository
                     ->setParameter('personnages', $personnageList)
                 ;
             }
+        }
+
+        // Faction
+        $faction = $cache->getItem('recensement_filters_faction')->get();
+        if ($faction instanceof Faction) {
+            $qb->orWhere('p.faction = :faction')
+                ->setParameter('faction', $faction->getCode())
+            ;
         }
 
         return $qb;

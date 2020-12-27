@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Faction;
 use App\Entity\Personnage;
 use App\Entity\Region;
 use App\Model\RecenseFilters;
@@ -35,12 +36,18 @@ class RecenseFilterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $region      = $options['region'];
+        $faction     = $options['faction'];
         $personnages = $options['personnages'];
 
         $builder
             ->add('region', EntityType::class, array(
                 'class'    => Region::class,
                 'data'     => $region ? $this->em->getRepository(Region::class)->find($region) : null,
+                'required' => false,
+            ))
+            ->add('faction', EntityType::class, array(
+                'class' => Faction::class,
+                'data' => $faction ? $this->em->getRepository(Faction::class)->find($faction) : null,
                 'required' => false,
             ))
             ->add('personnages', EntityType::class, array(
@@ -64,6 +71,10 @@ class RecenseFilterType extends AbstractType
             $cachedRegion->set($filters->region);
             $appCache->save($cachedRegion);
 
+            $cachedFaction = $appCache->getItem('recensement_filters_faction');
+            $cachedFaction->set($filters->faction);
+            $appCache->save($cachedFaction);
+
             $cachedPersonnages = $appCache->getItem('recensement_filters_personnages');
             $cachedPersonnages->set($filters->personnages);
             $appCache->save($cachedPersonnages);
@@ -75,8 +86,10 @@ class RecenseFilterType extends AbstractType
         $resolver->setDefaults(array(
             'data_class'  => RecenseFilters::class,
             'region'      => $this->cache->getItem('recensement_filters_region')->get(),
+            'faction'     => $this->cache->getItem('recensement_filters_faction')->get(),
             'personnages' => $this->cache->getItem('recensement_filters_personnages')->get(),
         ));
         $resolver->setAllowedTypes('region', array(Region::class, 'null'));
+        $resolver->setAllowedTypes('faction', array(Faction::class, 'null'));
     }
 }

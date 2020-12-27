@@ -3,6 +3,7 @@
 
 namespace App\Model;
 
+use App\Entity\Faction;
 use App\Entity\Personnage;
 use App\Entity\Region;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -16,6 +17,8 @@ use Doctrine\Common\Collections\Collection;
 class RecenseFilters
 {
     public ?Region $region = null;
+
+    public ?Faction $faction = null;
 
     /**
      * @var Personnage[]|Collection
