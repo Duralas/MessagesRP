@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  *     @ORM\Index(name="FK_TYPE_ZONE", columns={"type"}),
  *     @ORM\Index(name="FK_REGION_ZONE", columns={"region"})
  * })
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\ZoneRepository")
  */
 class Zone
 {

@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Entité pour la table "personnages" indiquant l'ensemble des personnages de Dùralas définis dans l'application.
  *
  * @ORM\Table(name="personnages", indexes={@ORM\Index(name="FK_FACTION_PERSONNAGE", columns={"faction"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\PersonnageRepository")
  */
 class Personnage
 {

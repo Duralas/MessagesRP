@@ -46,4 +46,10 @@ class Region
     {
         return $this->nom;
     }
+
+    public function __toString()
+    {
+        return $this->nom ?: 'Inconnue';
+    }
+
 }

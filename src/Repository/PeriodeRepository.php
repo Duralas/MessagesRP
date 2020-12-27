@@ -21,11 +21,19 @@ class PeriodeRepository extends ServiceEntityRepository
         return $this->getQBActive()->getQuery()->getOneOrNullResult();
     }
 
-    public function getQBActive(): QueryBuilder
+    public function getQBActive(?Periode $orPeriode = null): QueryBuilder
     {
-        return $this->createQueryBuilder('p')
+        $qb = $this->createQueryBuilder('p')
             ->where('p.startDate <= :today AND p.endDate >= :today')
             ->setParameter('today', date_create())
         ;
+
+        if ($orPeriode) {
+            $qb->orWhere('p.code = :periode')
+                ->setParameter('periode', $orPeriode->getCode())
+            ;
+        }
+
+        return $qb;
     }
 }

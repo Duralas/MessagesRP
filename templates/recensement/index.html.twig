@@ -26,6 +26,14 @@
 
 
   <h2>Formulaire de recensement</h2>
+  <h3>Filtres</h3>
+  {{ form_start(form_filtre, {attr: {action: path('app_recensement_filter')}}) }}
+  {{ form_widget(form_filtre) }}
+
+  <button class="btn" type="submit" title="Filtrer les propositions du recensement.">Filtrer</button>
+  {{ form_end(form_filtre) }}
+
+  <h3>Recensement</h3>
   {{ form_start(form_recensement, {attr: {action: path('app_recensement_handle')}}) }}
     <input name="recense_mode" type="hidden" value="{{ recense_mode ?? 'CREATE' }}">
     {{ form_widget(form_recensement) }}

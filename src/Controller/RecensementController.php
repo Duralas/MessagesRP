@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Message;
+use App\Form\RecenseFilterType;
 use App\Form\RecenseSearchType;
 use App\Form\RecenseType;
+use App\Model\RecenseFilters;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -29,6 +31,7 @@ class RecensementController extends AbstractController
     public function index(): Response
     {
         $recensement = new Message();
+
         return $this->createRecenseView($this->createForm(RecenseSearchType::class), $this->createForm(RecenseType::class, $recensement));
     }
 
@@ -52,7 +55,7 @@ class RecensementController extends AbstractController
 
         if ($formRecense->isSubmitted() && $formRecense->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            if ($request->get('recense_mode') !== 'UPDATE') {
+            if ('UPDATE' !== $request->get('recense_mode')) {
                 $entityManager->persist($recensement);
             }
             $entityManager->flush();
@@ -78,7 +81,7 @@ class RecensementController extends AbstractController
     {
         // Formulaire de recherche
         $recensement = new Message();
-        $formSearch = $this->createForm(RecenseSearchType::class, $recensement);
+        $formSearch  = $this->createForm(RecenseSearchType::class, $recensement);
         $formSearch->handleRequest($request);
 
         if ($formSearch->isSubmitted() && $formSearch->isValid()) {
@@ -96,11 +99,30 @@ class RecensementController extends AbstractController
     }
 
     /**
-     * Crée la vue de recensement avec les deux formulaires
+     * [Redirect] Enregistre les filtres et redirige vers la page de recensement.
      *
-     * @param FormInterface $formSearch Formulaire de {@see RecenseType recherche}
+     * @Route("/filter", name="app_recensement_filter", methods={"POST"})
+     *
+     * @param Request $request
+     *
+     * @return RedirectResponse
+     */
+    public function filter(Request $request): RedirectResponse
+    {
+        // Formulaire de recherche
+        $filters    = new RecenseFilters();
+        $formSearch = $this->createForm(RecenseFilterType::class, $filters);
+        $formSearch->handleRequest($request);
+
+        return $this->redirectToRoute('app_recensement');
+    }
+
+    /**
+     * Crée la vue de recensement avec les deux formulaires.
+     *
+     * @param FormInterface $formSearch  Formulaire de {@see RecenseType recherche}
      * @param FormInterface $formRecense Formulaire de {@see RecenseSearchType recensement}
-     * @param array         $viewData Données additionnelles pour la vue
+     * @param array         $viewData    Données additionnelles pour la vue
      *
      * @return Response Template TWIG de recensement
      */
@@ -108,6 +130,7 @@ class RecensementController extends AbstractController
     {
         return $this->render('recensement/index.html.twig', array_merge(array(
             'form_recherche'   => $formSearch->createView(),
+            'form_filtre'      => $this->createForm(RecenseFilterType::class)->createView(),
             'form_recensement' => $formRecense->createView(),
         ), $viewData));
     }
