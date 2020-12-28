@@ -55,9 +55,42 @@ class RecensementController extends AbstractController
 
         if ($formRecense->isSubmitted() && $formRecense->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            if ('UPDATE' !== $request->get('recense_mode')) {
-                $entityManager->persist($recensement);
-            }
+            $entityManager->persist($recensement);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_recensement');
+        }
+
+        return $this->createRecenseView($this->createForm(RecenseSearchType::class, $recensement), $formRecense);
+    }
+
+    /**
+     * [Redirect|TWIG] Modifie un recensement effectué et récupéré par le /search.
+     *
+     * Met à jour le recensement ou retourne les erreurs du formulaire.
+     *
+     * @Route("/recensement", name="app_recensement_edit", methods={"PATCH"})
+     *
+     * @param Request $request
+     *
+     * @return Response|RedirectResponse Template twig recensement si erreurs sinon vue de l'index
+     */
+    public function update(Request $request): Response
+    {
+        // Formulaire de recensement
+        $recensement = $this->getDoctrine()->getManager()->getRepository(Message::class)->findOneBy(array(
+            'periode' => $request->get('old_periode'),
+            'mois'    => $request->get('old_mois'),
+            'zone'    => $request->get('old_zone'),
+            'auteur'  => $request->get('old_auteur'),
+        ));
+        $formRecense = $this->createForm(RecenseType::class, $recensement, array(
+            'method' => 'PATCH',
+        ));
+        $formRecense->handleRequest($request);
+
+        if ($formRecense->isSubmitted() && $formRecense->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
 
             return $this->redirectToRoute('app_recensement');
@@ -84,8 +117,9 @@ class RecensementController extends AbstractController
         $formSearch  = $this->createForm(RecenseSearchType::class, $recensement);
         $formSearch->handleRequest($request);
 
+        $foundData = null;
         if ($formSearch->isSubmitted() && $formSearch->isValid()) {
-            $recensement = $this->getDoctrine()->getManager()->getRepository(Message::class)->findOneBy(array(
+            $foundData = $this->getDoctrine()->getManager()->getRepository(Message::class)->findOneBy(array(
                 'periode' => $recensement->getPeriode(),
                 'mois'    => $recensement->getMois(),
                 'zone'    => $recensement->getZone(),
@@ -93,8 +127,8 @@ class RecensementController extends AbstractController
             ));
         }
 
-        return $this->createRecenseView($formSearch, $this->createForm(RecenseType::class, $recensement), array(
-            'recense_mode' => $recensement ? 'UPDATE' : 'CREATE',
+        return $this->createRecenseView($formSearch, $this->createForm(RecenseType::class, $foundData ?? $recensement), array(
+            'recensement' => $foundData,
         ));
     }
 

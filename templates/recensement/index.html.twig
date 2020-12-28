@@ -34,10 +34,19 @@
   {{ form_end(form_filtre) }}
 
   <h3>Recensement</h3>
-  {{ form_start(form_recensement, {attr: {action: path('app_recensement_handle')}}) }}
-    <input name="recense_mode" type="hidden" value="{{ recense_mode ?? 'CREATE' }}">
+  {% set recensement_found = recensement ?? false %}
+  {{ form_start(form_recensement, {
+      'action': path(recensement_found ? 'app_recensement_edit' : 'app_recensement_handle'),
+      'method': recensement_found ? 'PATCH' : 'POST'
+  }) }}
+    {% if recensement_found %}
+      <input name="old_periode" type="hidden" value="{{ recensement.periode.code }}">
+      <input name="old_mois"    type="hidden" value="{{ recensement.mois.ordre }}">
+      <input name="old_zone"    type="hidden" value="{{ recensement.zone.code }}">
+      <input name="old_auteur"  type="hidden" value="{{ recensement.auteur.nom }}">
+    {% endif %}
     {{ form_widget(form_recensement) }}
 
-    <button class="btn" type="submit" title="Soumettre le formulaire pour recenser les messages RP.">{{ recense_mode is defined and recense_mode == 'UPDATE' ? 'Modifier' : 'Recenser' }}</button>
+    <button class="btn" type="submit" title="Soumettre le formulaire pour recenser les messages RP.">{{ recensement_found ? 'Modifier' : 'Recenser' }}</button>
   {{ form_end(form_recensement) }}
 {% endblock %}
