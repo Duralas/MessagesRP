@@ -5,10 +5,10 @@ Le principe est d'écrire des récits mettant en scène son propre personnage af
 ## Le Phénix Enchaîné
 
 Le [Phénix Enchaîné](https://www.lemondededuralas.org/f130-le-phenix-enchaine) est la gazette du forum contenant 
-des informations à la fois IRL pour les joueurs mais aussi RP, notamment sur des événments qui ont eu lieu 
+des informations à la fois IRL pour les joueurs, mais aussi RP, notamment sur des événements qui ont eu lieu 
 ou des nouveautés et surprises sortantes ou à venir.
 
-Parmi les articles, il y a une catégorie statistiques qui fait un recensement sur des variables RP (nombre de races, 
+Parmi les articles, il y a une catégorie statistique qui fait un recensement sur des variables RP (nombre de races, 
 de classes, de récolteurs/artisans par métier, de membres de factions ou guildes par structure, etc.) et sur les 
 messages RP rédigés.
 
@@ -29,7 +29,7 @@ Ce projet réalisé en Symfony 5 a pour but de facilement recenser les messages 
 
 ## Réalisation
 
-Plusieurs étapes sont nécessaires pour utiliser l'application mais surtout pour la rendre la plus complète possible selon les besoins :
+Plusieurs étapes sont nécessaires pour utiliser l'application, mais surtout pour la rendre la plus complète possible selon les besoins :
 - [x] Entités
    - [ ] CRUD
 - [ ] Formulaire de recensement

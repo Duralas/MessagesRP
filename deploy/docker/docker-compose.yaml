@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+    app:
+        image: duralas/messages_rp/app_dev_php
+        container_name: duralas_messages_rp_app_dev_php
+        build:
+            context: ./php
+        volumes:
+            - ../../:/var/www/html
+        networks:
+            - duralas_messages_rp_network
+
+networks:
+    duralas_messages_rp_network:
