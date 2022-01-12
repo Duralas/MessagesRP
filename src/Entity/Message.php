@@ -30,7 +30,7 @@ class Message
     private int $nombre = 1;
 
     /**
-     * @ORM\Column(name="modification", type="datetime", nullable=false, options={"default"="current_timestamp()","comment"="Dernière date de modification"})
+     * @ORM\Column(name="modification", type="datetime", nullable=false, options={"comment"="Dernière date de modification"})
      * @Gedmo\Timestampable(on="update")
      *
      * @var DateTime Dernière date de modification
