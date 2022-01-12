@@ -2,9 +2,9 @@ FROM php:8-fpm as php
 
 COPY --from=composer:2.2 /usr/bin/composer /usr/local/bin/composer
 
-# Install Postgre PDO, Zip, intl
+# Install Postgre PDO, git, Zip, intl
 RUN apt-get update -y \
-    && apt-get install -y libpq-dev libzip-dev zip libicu-dev \
+    && apt-get install -y libpq-dev libzip-dev git zip libicu-dev \
     && docker-php-ext-install pdo pdo_mysql zip intl
 
 # Extra php lib : APCU, Redis, Xdebug
