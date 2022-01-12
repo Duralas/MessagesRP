@@ -4,8 +4,8 @@ COPY --from=composer:2.2 /usr/bin/composer /usr/local/bin/composer
 
 # Install Postgre PDO, git, Zip, intl
 RUN apt-get update -y \
-    && apt-get install -y libpq-dev libzip-dev git zip libicu-dev \
-    && docker-php-ext-install pdo pdo_mysql zip intl
+    && apt-get install -y libpq-dev libzip-dev bash git zip libicu-dev \
+    && docker-php-ext-install opcache pdo pdo_pgsql zip intl
 
 # Extra php lib : APCU, Redis, Xdebug
 RUN pecl install apcu \
