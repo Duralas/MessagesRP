@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="zones",
  * uniqueConstraints={
- *     @ORM\UniqueConstraint(name="nom", columns={"nom"})},
+ *     @ORM\UniqueConstraint(name="UNIQ_ZONES_NOM", columns={"nom"})},
  * indexes={
  *     @ORM\Index(name="FK_TYPE_ZONE", columns={"type"}),
  *     @ORM\Index(name="FK_REGION_ZONE", columns={"region"})

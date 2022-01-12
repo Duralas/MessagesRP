@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Entité pour la table "régions" listant les régions de Dùralas.
  *
- * @ORM\Table(name="regions", uniqueConstraints={@ORM\UniqueConstraint(name="nom", columns={"nom"})})
+ * @ORM\Table(name="regions", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQ_REGIONS_NOM", columns={"nom"})})
  * @ORM\Entity
  */
 class Region

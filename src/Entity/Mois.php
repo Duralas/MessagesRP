@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Entité pour la table "mois" listant les mois de l'année.
  *
- * @ORM\Table(name="mois", uniqueConstraints={@ORM\UniqueConstraint(name="nom", columns={"nom"})})
+ * @ORM\Table(name="mois", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQ_MOIS_NOM", columns={"nom"})})
  * @ORM\Entity
  */
 class Mois
