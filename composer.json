@@ -27,7 +27,6 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16",
-        "symfony/maker-bundle": "^1.24",
         "symfony/stopwatch": "^5.2",
         "symfony/web-profiler-bundle": "^5.2"
     },
@@ -36,7 +35,11 @@
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "symfony/flex": true
+        }
     },
     "autoload": {
         "psr-4": {
