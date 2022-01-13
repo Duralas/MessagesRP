@@ -17,6 +17,11 @@ RUN pecl install apcu \
 COPY ./conf/custom.xdebug.ini /usr/local/etc/php/conf.d/custom.xdebug.ini
 COPY ./conf/custom.php.ini /usr/local/etc/php/conf.d/custom.php.ini
 
+# Install yarn
+RUN \
+    apt-get install -y npm \
+    && npm install --global yarn
+
 # For bin/ scripts
 ENV COMPOSER_HOME=/composer
 
