@@ -18,6 +18,7 @@
         "symfony/form": "5.4.*",
         "symfony/framework-bundle": "5.4.*",
         "symfony/monolog-bundle": "^3.6",
+        "symfony/runtime": "5.4.*",
         "symfony/security-csrf": "5.4.*",
         "symfony/twig-bundle": "5.4.*",
         "symfony/validator": "5.4.*",
@@ -38,7 +39,8 @@
         "sort-packages": true,
         "allow-plugins": {
             "composer/package-versions-deprecated": true,
-            "symfony/flex": true
+            "symfony/flex": true,
+            "symfony/runtime": true
         }
     },
     "autoload": {
