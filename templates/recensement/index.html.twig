@@ -14,12 +14,16 @@
     </a> à propos des informations suivantes :
 
     <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-            <strong>Mois réel</strong> durant lequel ont été postés les messages recensés.
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <strong>Mois réel</strong> durant lequel ont été postés les messages recensés.
+            </div>
         </li>
-        <li class="list-group-item">
-            <strong>Zone</strong> dans laquelle ont été postés les messages. Ceci permet aussi de définir la
-            <u>région</u>.
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <strong>Zone</strong> dans laquelle ont été postés les messages. Ceci permet aussi de définir la
+                <u>région</u>.
+            </div>
         </li>
         <li class="list-group-item d-flex justify-content-between align-items-start">
             <div class="ms-2 me-auto">
@@ -33,39 +37,50 @@
                 <i class="bi bi-box-arrow-up-right"></i>
             </a>
         </li>
-        <li class="list-group-item">
-            Le <strong>nombre</strong> de messages postés selon les granularités listées au-dessus.
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                Le <strong>nombre</strong> de messages postés selon les granularités listées au-dessus.
+            </div>
         </li>
     </ul>
 {% endblock %}
 
 {% block content %}
-    <div class="card">
-        <h2 class="card-header">Rechercher un recensement</h2>
-        <div class="card-body">
-            <div class="card-subtitle mb-2 text-muted">
-                En remplissant les informations indiquées, il est possible de rechercher un recensement déjà
-                effectué sur la période active.
-            </div>
-        </div>
-        <div class="card-body">
-            {{ form_start(form_recherche, {attr: {action: path('app_recensement_search')}}) }}
-                {{ form_widget(form_recherche) }}
+    <div class="accordion mt-3" id="accordionSearch">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="accordionHeadingSearch">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="accordionContentSearch">
+                    Rechercher un recensement
+                </button>
+            </h2>
+            <div id="accordionContentSearch" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionSearch">
+                <div class="accordion-body">
+                    <div class="mb-2 text-muted">
+                        En remplissant les informations indiquées, il est possible de rechercher un recensement déjà
+                        effectué sur la période active.
+                    </div>
 
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button
-                        class="btn btn-outline-primary"
-                        type="submit"
-                        title="Rechercher un recensement pour les paramètres indiqués."
-                    >
-                        Rechercher
-                    </button>
+                    <div>
+                        {{ form_start(form_recherche, {attr: {action: path('app_recensement_search')}}) }}
+                        {{ form_widget(form_recherche) }}
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button
+                                class="btn btn-outline-primary"
+                                type="submit"
+                                title="Rechercher un recensement pour les paramètres indiqués."
+                            >
+                                Rechercher
+                            </button>
+                        </div>
+                        {{ form_end(form_recherche) }}
+                    </div>
                 </div>
-            {{ form_end(form_recherche) }}
+            </div>
         </div>
     </div>
 
-    <div class="card">
+    <div class="card mt-3">
         <h2 class="card-header">Formulaire de recensement</h2>
 
         <div class="card-body">
