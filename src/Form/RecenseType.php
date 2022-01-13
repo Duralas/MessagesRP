@@ -56,9 +56,9 @@ class RecenseType extends AbstractType
             ->add('periode', EntityType::class, array(
                 'class'         => Periode::class,
                 'data'          => $periode,
-                'query_builder' => static function (PeriodeRepository $repo) use ($periode) {
-                    return $repo->getQBActive($periode);
-                },
+//                'query_builder' => static function (PeriodeRepository $repo) use ($periode) {
+//                    return $repo->getQBActive($periode);
+//                },
             ))
             ->add('mois', EntityType::class, array(
                 'class'         => Mois::class,
