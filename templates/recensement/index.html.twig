@@ -6,47 +6,78 @@
 {% block content_title %}Recensement de message RP{% endblock %}
 
 {% block introduction %}
-  Cette page fournit le formulaire permettant de recensement les messages RP selon la <a href="{{ path('periode_index') }}" title="Cliquer pour accéder à la liste des périodes paramétrées">période</a> à propos des informations suivantes :
-  <ul>
-    <li><strong>Mois réel</strong> durant lequel ont été postés les messages recensés.</li>
-    <li><strong>Zone</strong> dans laquelle ont été postés les messages. Ceci permet aussi de définir la <u>région</u>.</li>
-    <li><strong>Personnage</strong> : l'auteur des-dits messages recensés, à condition qu'il ait été <a href="{{ path('personnage_index') }}" title="Cliquer pour accéder à la liste des personnages paramétrés">paramétré</a> dans l'application.</li>
-    <li>Le <strong>nombre</strong> de messages postés selon les granularités listées au-dessus.</li>
-  </ul>
+    Cette page fournit le formulaire permettant de recensement les messages RP selon la
+    <a
+        href="{{ path('periode_index') }}"
+        title="Cliquer pour accéder à la liste des périodes paramétrées"
+    >
+        période
+    </a> à propos des informations suivantes :
+
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            <strong>Mois réel</strong> durant lequel ont été postés les messages recensés.
+        </li>
+        <li class="list-group-item">
+            <strong>Zone</strong> dans laquelle ont été postés les messages. Ceci permet aussi de définir la
+            <u>région</u>.
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <strong>Personnage</strong> : l'auteur des-dits messages recensés, à condition qu'il ait été paramétré dans l'application.
+            </div>
+            <a
+                href="{{ path('personnage_index') }}"
+                class="badge bg-primary rounded-pill"
+                title="Cliquer pour accéder à la liste des personnages paramétrés"
+            >
+                <i class="bi bi-box-arrow-up-right"></i>
+            </a>
+        </li>
+        <li class="list-group-item">
+            Le <strong>nombre</strong> de messages postés selon les granularités listées au-dessus.
+        </li>
+    </ul>
 {% endblock %}
 
 {% block content %}
-  <h2>Formulaire de recherche</h2>
-  <div class="info">En remplissant les informations indiquées, il est possible de rechercher un recensement déjà effectué sur la période active.</div>
-  {{ form_start(form_recherche, {attr: {action: path('app_recensement_search')}}) }}
+    <h2>Formulaire de recherche</h2>
+    <div class="info">En remplissant les informations indiquées, il est possible de rechercher un recensement déjà
+        effectué sur la période active.
+    </div>
+    {{ form_start(form_recherche, {attr: {action: path('app_recensement_search')}}) }}
     {{ form_widget(form_recherche) }}
 
-    <button class="btn" type="submit" title="Rechercher un recensement pour les paramètres indiqués.">Rechercher</button>
-  {{ form_end(form_recherche) }}
+    <button class="btn btn-outline-primary" type="submit"
+            title="Rechercher un recensement pour les paramètres indiqués.">Rechercher
+    </button>
+    {{ form_end(form_recherche) }}
 
 
-  <h2>Formulaire de recensement</h2>
-  <h3>Filtres</h3>
-  {{ form_start(form_filtre, {attr: {action: path('app_recensement_filter')}}) }}
-  {{ form_widget(form_filtre) }}
+    <h2>Formulaire de recensement</h2>
+    <h3>Filtres</h3>
+    {{ form_start(form_filtre, {attr: {action: path('app_recensement_filter')}}) }}
+    {{ form_widget(form_filtre) }}
 
-  <button class="btn" type="submit" title="Filtrer les propositions du recensement.">Filtrer</button>
-  {{ form_end(form_filtre) }}
+    <button class="btn btn-outline-primary" type="submit" title="Filtrer les propositions du recensement.">Filtrer
+    </button>
+    {{ form_end(form_filtre) }}
 
-  <h3>Recensement</h3>
-  {% set recensement_found = recensement ?? false %}
-  {{ form_start(form_recensement, {
-      'action': path(recensement_found ? 'app_recensement_edit' : 'app_recensement_handle'),
-      'method': recensement_found ? 'PATCH' : 'POST'
-  }) }}
+    <h3>Recensement</h3>
+    {% set recensement_found = recensement ?? false %}
+    {{ form_start(form_recensement, {
+        'action': path(recensement_found ? 'app_recensement_edit' : 'app_recensement_handle'),
+        'method': recensement_found ? 'PATCH' : 'POST'
+    }) }}
     {% if recensement_found %}
-      <input name="old_periode" type="hidden" value="{{ recensement.periode.code }}">
-      <input name="old_mois"    type="hidden" value="{{ recensement.mois.ordre }}">
-      <input name="old_zone"    type="hidden" value="{{ recensement.zone.code }}">
-      <input name="old_auteur"  type="hidden" value="{{ recensement.auteur.nom }}">
+        <input name="old_periode" type="hidden" value="{{ recensement.periode.code }}">
+        <input name="old_mois" type="hidden" value="{{ recensement.mois.ordre }}">
+        <input name="old_zone" type="hidden" value="{{ recensement.zone.code }}">
+        <input name="old_auteur" type="hidden" value="{{ recensement.auteur.nom }}">
     {% endif %}
     {{ form_widget(form_recensement) }}
 
-    <button class="btn" type="submit" title="Soumettre le formulaire pour recenser les messages RP.">{{ recensement_found ? 'Modifier' : 'Recenser' }}</button>
-  {{ form_end(form_recensement) }}
+    <button class="btn btn-primary" type="submit"
+            title="Soumettre le formulaire pour recenser les messages RP.">{{ recensement_found ? 'Modifier' : 'Recenser' }}</button>
+    {{ form_end(form_recensement) }}
 {% endblock %}
