@@ -2,7 +2,6 @@
 
 {% block title %}Recensement{% endblock %}
 
-
 {% block content_title %}Recensement de message RP{% endblock %}
 
 {% block introduction %}
@@ -41,43 +40,76 @@
 {% endblock %}
 
 {% block content %}
-    <h2>Formulaire de recherche</h2>
-    <div class="info">En remplissant les informations indiquées, il est possible de rechercher un recensement déjà
-        effectué sur la période active.
+    <div class="card">
+        <h2 class="card-header">Rechercher un recensement</h2>
+        <div class="card-body">
+            <div class="card-subtitle mb-2 text-muted">
+                En remplissant les informations indiquées, il est possible de rechercher un recensement déjà
+                effectué sur la période active.
+            </div>
+        </div>
+        <div class="card-body">
+            {{ form_start(form_recherche, {attr: {action: path('app_recensement_search')}}) }}
+                {{ form_widget(form_recherche) }}
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button
+                        class="btn btn-outline-primary"
+                        type="submit"
+                        title="Rechercher un recensement pour les paramètres indiqués."
+                    >
+                        Rechercher
+                    </button>
+                </div>
+            {{ form_end(form_recherche) }}
+        </div>
     </div>
-    {{ form_start(form_recherche, {attr: {action: path('app_recensement_search')}}) }}
-    {{ form_widget(form_recherche) }}
 
-    <button class="btn btn-outline-primary" type="submit"
-            title="Rechercher un recensement pour les paramètres indiqués.">Rechercher
-    </button>
-    {{ form_end(form_recherche) }}
+    <div class="card">
+        <h2 class="card-header">Formulaire de recensement</h2>
 
+        <div class="card-body">
+            <h3 class="card-title">Filtres</h3>
+            {{ form_start(form_filtre, {attr: {action: path('app_recensement_filter')}}) }}
+            {{ form_widget(form_filtre) }}
 
-    <h2>Formulaire de recensement</h2>
-    <h3>Filtres</h3>
-    {{ form_start(form_filtre, {attr: {action: path('app_recensement_filter')}}) }}
-    {{ form_widget(form_filtre) }}
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button
+                    class="btn btn-outline-primary"
+                    type="submit"
+                    title="Filtrer les propositions du recensement."
+                >
+                    Rechercher
+                </button>
+            </div>
+            {{ form_end(form_filtre) }}
+        </div>
 
-    <button class="btn btn-outline-primary" type="submit" title="Filtrer les propositions du recensement.">Filtrer
-    </button>
-    {{ form_end(form_filtre) }}
+        <div class="card-body">
+            <h3 class="card-title">Recensement</h3>
+            {% set recensement_found = recensement ?? false %}
+            {{ form_start(form_recensement, {
+                'action': path(recensement_found ? 'app_recensement_edit' : 'app_recensement_handle'),
+                'method': recensement_found ? 'PATCH' : 'POST'
+            }) }}
+                {% if recensement_found %}
+                    <input name="old_periode" type="hidden" value="{{ recensement.periode.code }}">
+                    <input name="old_mois" type="hidden" value="{{ recensement.mois.ordre }}">
+                    <input name="old_zone" type="hidden" value="{{ recensement.zone.code }}">
+                    <input name="old_auteur" type="hidden" value="{{ recensement.auteur.nom }}">
+                {% endif %}
+                {{ form_widget(form_recensement) }}
 
-    <h3>Recensement</h3>
-    {% set recensement_found = recensement ?? false %}
-    {{ form_start(form_recensement, {
-        'action': path(recensement_found ? 'app_recensement_edit' : 'app_recensement_handle'),
-        'method': recensement_found ? 'PATCH' : 'POST'
-    }) }}
-    {% if recensement_found %}
-        <input name="old_periode" type="hidden" value="{{ recensement.periode.code }}">
-        <input name="old_mois" type="hidden" value="{{ recensement.mois.ordre }}">
-        <input name="old_zone" type="hidden" value="{{ recensement.zone.code }}">
-        <input name="old_auteur" type="hidden" value="{{ recensement.auteur.nom }}">
-    {% endif %}
-    {{ form_widget(form_recensement) }}
-
-    <button class="btn btn-primary" type="submit"
-            title="Soumettre le formulaire pour recenser les messages RP.">{{ recensement_found ? 'Modifier' : 'Recenser' }}</button>
-    {{ form_end(form_recensement) }}
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button
+                        class="btn btn-primary"
+                        type="submit"
+                        title="Soumettre le formulaire pour recenser les messages RP."
+                    >
+                        {{ recensement_found ? 'Modifier' : 'Recenser' }}
+                    </button>
+                </div>
+            {{ form_end(form_recensement) }}
+        </div>
+    </div>
 {% endblock %}
