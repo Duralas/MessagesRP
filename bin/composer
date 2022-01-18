@@ -7,4 +7,4 @@ source "${PROJECT_DIR}"/bin/common.inc.bash
 
 dockerisePhp
 
-php "${BIN_SCRIPTS_PATH}"/console.php ${scriptParameters}
+composer ${scriptParameters}
