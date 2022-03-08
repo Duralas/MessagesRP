@@ -18,7 +18,6 @@ class Personnage
      * @ORM\Id
      *
      * @Assert\NotBlank(message="Un personnage a forcément un nom permettant de l'identifier.")
-     * @Assert\Unique(message="Le nom du personnage est unique pour pouvoir l'identifier.")
      *
      * @var string|null Nom du personnage (sert d'identifiant)
      */
