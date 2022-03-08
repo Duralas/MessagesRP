@@ -1,0 +1,27 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Recensement de masse{% endblock %}
+
+{% block content_title %}Recensement de masse{% endblock %}
+
+{% block introduction %}
+    <div class="card mt-3">
+        <h2 class="card-header">Détermination des valeurs</h2>
+
+        <div class="card-body">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button
+                    class="btn btn-success"
+                    type="submit"
+                >
+                    Valider
+                </button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+
