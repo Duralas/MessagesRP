@@ -2,11 +2,16 @@
 
 namespace App\Controller\CRUD;
 
-use App\Entity\Personnage;
-use App\Form\CRUD\PersonnageType;
+use App\{
+    Entity\Personnage,
+    Form\CRUD\PersonnageType,
+    Repository\PersonnageRepository
+};
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\{
+    Request,
+    Response
+};
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -17,15 +22,14 @@ class PersonnageController extends AbstractController
     /**
      * @Route("/", name="personnage_index", methods={"GET"})
      */
-    public function index(): Response
+    public function index(PersonnageRepository $personnageRepository): Response
     {
-        $personnages = $this->getDoctrine()
-            ->getRepository(Personnage::class)
-            ->findAll();
-
-        return $this->render('personnage/index.html.twig', [
-            'personnages' => $personnages,
-        ]);
+        return $this->render(
+            'personnage/index.html.twig',
+            [
+                'personnages' => $personnageRepository->getAll(),
+            ]
+        );
     }
 
     /**

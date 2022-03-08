@@ -1,11 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Personnage{% endblock %}
+{% block title %}Personnages - Modification{% endblock %}
 
-{% block body %}
-    <h1>Edit Personnage</h1>
+{% block content_title %}Modification personnage{% endblock %}
 
-    {{ include('personnage/_form.html.twig', {'button_label': 'Update'}) }}
+{% block introduction %}
+    <div class="d-grid mb-2 gap-2 d-md-flex justify-content-md-end">
+        <a class="btn btn-secondary" href="{{ path('personnage_index') }}">Retour à la liste</a>
+    </div>
+{% endblock %}
 
-    <a href="{{ path('personnage_index') }}">back to list</a>
+{% block content %}
+    {{ include('personnage/_form.html.twig') }}
 {% endblock %}

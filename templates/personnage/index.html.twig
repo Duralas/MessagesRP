@@ -1,35 +1,51 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Personnage index{% endblock %}
+{% block title %}Personnages{% endblock %}
 
-{% block body %}
-    <h1>Personnage index</h1>
+{% block content_title %}Liste des personnages{% endblock %}
 
-    <table class="table">
+{% block introduction %}
+    <div class="d-grid mb-2  gap-2 d-md-flex justify-content-md-end">
+        <a class="btn btn-primary" href="{{ path('personnage_new') }}">Ajouter un personnage</a>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <table class="table table-sm align-middle">
         <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Actif</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th>Nom</th>
+            <th>Faction</th>
+            <th></th>
+        </tr>
         </thead>
         <tbody>
         {% for personnage in personnages %}
-            <tr>
+            <tr {% if personnage.actif is same as(false) %}class="text-muted"{% endif %}>
                 <td>{{ personnage.nom }}</td>
-                <td>{{ personnage.actif ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('personnage_show', {'nom': personnage.nom}) }}">show</a>
-                    <a href="{{ path('personnage_edit', {'nom': personnage.nom}) }}">edit</a>
+                <td>{{ personnage.faction.nom ?? '' }}</td>
+                <td class="gap-2 d-flex justify-content-end">
+                    <a
+                        class="btn btn-primary"
+                        href="{{ path('personnage_edit', {'nom': personnage.nom}) }}"
+                    >
+                        Modifier
+                    </a>
+                    <a
+                        class="btn btn-outline-primary"
+                        href="{{ path('personnage_show', {'nom': personnage.nom}) }}"
+                    >
+                        Visualiser
+                    </a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">Aucun enregistrement...</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('personnage_new') }}">Create new</a>
+    <a class="btn btn-primary" href="{{ path('personnage_new') }}">Ajouter un personnage</a>
 {% endblock %}

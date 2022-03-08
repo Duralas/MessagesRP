@@ -1,24 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Personnage{% endblock %}
+{% block title %}Personnages - Visualisation{% endblock %}
 
-{% block body %}
-    <h1>Personnage</h1>
+{% block content_title %}Visualisation personnage{% endblock %}
 
-    <table class="table">
+{% block introduction %}
+    <div class="d-grid mb-2  gap-2 d-md-flex justify-content-md-end">
+        <a class="btn btn-secondary" href="{{ path('personnage_index') }}">Retour à la liste</a>
+        <a class="btn btn-primary" href="{{ path('personnage_edit', {'nom': personnage.nom}) }}">Modification</a>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <table class="table table-sm align-middle">
         <tbody>
-            <tr>
-                <th>Nom</th>
-                <td>{{ personnage.nom }}</td>
-            </tr>
-            <tr>
-                <th>Actif</th>
-                <td>{{ personnage.actif ? 'Yes' : 'No' }}</td>
-            </tr>
+        <tr>
+            <th>Nom</th>
+            <td>{{ personnage.nom }}</td>
+        </tr>
+        <tr>
+            <th>Faction</th>
+            <td>{{ personnage.faction.nom ?? 'Sans faction' }}</td>
+        </tr>
+        <tr>
+            <th>Actif</th>
+            <td>{{ personnage.actif ? 'Oui' : 'Non' }}</td>
+        </tr>
         </tbody>
     </table>
-
-    <a href="{{ path('personnage_index') }}">back to list</a>
-
-    <a href="{{ path('personnage_edit', {'nom': personnage.nom}) }}">edit</a>
 {% endblock %}

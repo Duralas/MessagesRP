@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
-use App\Entity\Faction;
-use App\Entity\Personnage;
+use App\{
+    Entity\Faction,
+    Entity\Personnage
+};
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\QueryBuilder;
@@ -15,6 +17,17 @@ class PersonnageRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Personnage::class);
+    }
+
+    /**
+     * @return array<Personnage>
+     */
+    public function getAll(): array
+    {
+        return $this
+            ->getQBBase()
+            ->getQuery()
+            ->getResult();
     }
 
     /**
