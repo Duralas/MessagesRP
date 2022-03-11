@@ -1,0 +1,54 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Recensement de masse{% endblock %}
+
+{% block content_title %}Recensement de masse{% endblock %}
+
+{% block introduction %}
+    <div class="card mt-3">
+        <h2 class="card-header">Saisie des valeurs - {{ form.vars.data.zone.nom }} </h2>
+
+        <div class="card-body">
+            {{ form_start(form) }}
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <th scope="col" class="col-2">Personnage</th>
+                    {% for month in period_month_list %}
+                        <th scope="col" class="col-1">{{ month.nom }}</th>
+                    {% endfor %}
+                    </thead>
+                    <tbody>
+                    {% for seizure_census_form in form.seizureCensusList %}
+                        <tr>
+                            <th
+                                scope="row"
+                                {% if seizure_census_form.vars.data.personnage.actif is same as (false) %}
+                                    class="text-muted"
+                                {% endif %}
+                            >
+                                {{ seizure_census_form.vars.data.personnage.nom }}
+                            </th>
+                            {% for month_seizure_form in seizure_census_form.censusMonthSeizures %}
+                                <td>{{ form_widget(month_seizure_form) }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button
+                    class="btn btn-success"
+                    type="submit"
+                >
+                    Valider
+                </button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+
