@@ -8,11 +8,14 @@ use App\{
 };
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\{
+    AbstractQuery,
+    QueryBuilder
+};
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Contracts\Cache\CacheInterface;
 
-class PersonnageRepository extends ServiceEntityRepository
+final class PersonnageRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -28,6 +31,18 @@ class PersonnageRepository extends ServiceEntityRepository
             ->getQBBase()
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @return array<string>
+     */
+    public function getAllActiveIds(): array
+    {
+        return $this
+            ->getQBBase()
+            ->select('p.nom')
+            ->getQuery()
+            ->getResult(AbstractQuery::HYDRATE_SCALAR_COLUMN);
     }
 
     /**
@@ -89,7 +104,7 @@ class PersonnageRepository extends ServiceEntityRepository
                     return $item->getNom();
                 }
 
-                return \is_string($item) && !empty($item) ? $item : null;
+                return is_string($item) && !empty($item) ? $item : null;
             }, $personnages instanceof Collection ? $personnages->toArray() : $personnages);
 
             if (!empty($personnageList)) {

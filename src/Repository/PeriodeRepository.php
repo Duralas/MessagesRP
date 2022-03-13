@@ -6,14 +6,29 @@ namespace App\Repository;
 
 use App\Entity\Periode;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\{
+    AbstractQuery,
+    QueryBuilder
+};
 use Doctrine\Persistence\ManagerRegistry;
 
-class PeriodeRepository extends ServiceEntityRepository
+final class PeriodeRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Periode::class);
+    }
+
+    /**
+     * @return array<string>
+     */
+    public function getAllActiveIds(): array
+    {
+        return $this
+            ->getQBActive()
+            ->select('p.code')
+            ->getQuery()
+            ->getResult(AbstractQuery::HYDRATE_SCALAR_COLUMN);
     }
 
     public function findActive(): ?Periode

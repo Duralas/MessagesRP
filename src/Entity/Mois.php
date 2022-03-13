@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
+use App\Repository\MoisRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Entité pour la table "mois" listant les mois de l'année.
  *
  * @ORM\Table(name="mois", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQ_MOIS_NOM", columns={"nom"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass=MoisRepository::class)
  */
 class Mois
 {
@@ -19,14 +20,14 @@ class Mois
      *
      * @var int|null Ordre du mois
      */
-    private ?int $ordre;
+    private ?int $ordre = null;
 
     /**
      * @ORM\Column(name="nom", type="string", length=15, nullable=false, options={"comment"="Le nom du mois"})
      *
      * @var string|null Nom du mois
      */
-    private ?string $nom;
+    private ?string $nom = null;
 
     /**
      * Récupère l'ordre du mois.

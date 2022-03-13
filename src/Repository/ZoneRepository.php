@@ -2,18 +2,35 @@
 
 namespace App\Repository;
 
-use App\Entity\Region;
-use App\Entity\Zone;
+use App\{
+    Entity\Region,
+    Entity\Zone
+};
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\{
+    AbstractQuery,
+    QueryBuilder
+};
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Contracts\Cache\CacheInterface;
 
-class ZoneRepository extends ServiceEntityRepository
+final class ZoneRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Zone::class);
+    }
+
+    /**
+     * @return array<string>
+     */
+    public function getAllIds(): array
+    {
+        return $this
+            ->createQueryBuilder('z')
+            ->select('z.code')
+            ->getQuery()
+            ->getResult(AbstractQuery::HYDRATE_SCALAR_COLUMN);
     }
 
     /**

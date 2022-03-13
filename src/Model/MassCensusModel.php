@@ -20,6 +20,7 @@ final class MassCensusModel
 
     private ?Zone $zone = null;
 
+    /** @var Collection<Personnage> */
     private Collection $personnages;
 
     public function __construct()
@@ -32,7 +33,22 @@ final class MassCensusModel
         return $this->periode;
     }
 
-    public function setPeriode(?Periode $periode): MassCensusModel
+    public function getStrictPeriode(): Periode
+    {
+        if ($this->getPeriode() instanceof Periode === false) {
+            throw new \TypeError(
+                'Given type "'
+                . get_debug_type($this->getPeriode())
+                . '" but expected "'
+                . Periode::class
+                . '".'
+            );
+        }
+
+        return $this->getPeriode();
+    }
+
+    public function setPeriode(?Periode $periode): static
     {
         $this->periode = $periode;
 
@@ -44,7 +60,7 @@ final class MassCensusModel
         return $this->zone;
     }
 
-    public function setZone(?Zone $zone): MassCensusModel
+    public function setZone(?Zone $zone): static
     {
         $this->zone = $zone;
 
@@ -62,7 +78,7 @@ final class MassCensusModel
     /**
      * @param Collection<Personnage> $personnages
      */
-    public function setPersonnages(Collection $personnages): MassCensusModel
+    public function setPersonnages(Collection $personnages): static
     {
         $this->personnages = $personnages;
 
