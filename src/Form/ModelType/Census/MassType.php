@@ -70,6 +70,9 @@ final class MassType extends AbstractType
                 'personnages',
                 EntityType::class,
                 array(
+                    'attr' => [
+                        'size' => 10,
+                    ],
                     'class' => Personnage::class,
                     'constraints' => [
                         new Count(min: 1, minMessage: 'Au moins un personnage doit être sélectionné.'),
